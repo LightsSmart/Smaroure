@@ -1,0 +1,31 @@
+/* Base Styles */
+.container {
+    display: flex;
+    margin: 10px 0;
+}
+
+.item {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+/* Responsive layout for wider screens (horizontal layout) */
+@media (min-width: 599.99px) {
+    .container {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* Responsive layout for smaller screen (vertical layout) */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

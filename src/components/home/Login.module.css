@@ -1,0 +1,72 @@
+/* Base Styles */
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.form {
+    background: white;
+    padding: 1.25rem;
+    min-width: 20rem;
+
+    > h2 {
+        text-align: center;
+        margin-bottom: 1.25rem;
+    }
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+
+    label {
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.625rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+}
+
+.button {
+    width: 100%;
+    padding: 0.625rem;
+    margin: 0.5rem auto;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #004494;
+    }
+}
+
+/* Responsive layout for wider screens (Desktop support) */
+@media (min-width: 599.99px) {
+    .container {
+        align-items: center;
+    }
+
+    .form {
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Responsive layout for smaller screen (Mobile support) */
+@media (max-width: 600px) {
+    .container {
+        align-items: stretch;
+    }
+
+    .form {
+        width: 100%;                                  /* Full width on small screens */
+    }
+}

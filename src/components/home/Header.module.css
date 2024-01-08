@@ -1,0 +1,138 @@
+/*** Base Styles ***/
+.topper {
+    line-height: var(--toggle-size);
+    position: absolute;
+    width: 100%;
+    height: var(--toggle-size);
+    text-align: center;
+    color: white;
+    background: black;
+}
+
+.content {
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    & > h1 {
+        font-size: 5rem;
+        font-weight: inherit;
+        margin-bottom: 0.125rem;
+        letter-spacing: -0.05rem;
+        color: white;
+    }
+
+    & > h2 {
+        font-weight: inherit;
+        margin-top: 0;
+        color: white;
+    }
+}
+
+.navbar {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    display: flex;
+    transition: transform 0.3s, background-color 0.3s ease-in-out;
+    background-color: transparent;
+
+    .tab {
+        cursor: pointer;
+        user-select: none;                                         /* User unselectable components */
+        border: none;
+    }
+}
+
+/*** Responsive layout for wider screens (Desktop support) ***/
+@media (min-width: 599.99px) {
+    .header {
+        --navbar-width: 100vw;                                     /* Header width should be ignore scroll bar */
+        height: max(16rem, 50vh);
+    }
+
+    .topper {
+        display: none;
+    }
+
+    .navbar {
+        flex-direction: row;
+        justify-content: center;
+        width: var(--navbar-width);
+        background: rgba(0, 0, 0, 0.1);
+
+        .tab {
+            position: relative;
+            overflow: hidden;
+            flex: none;
+            padding: 1.5rem;
+            letter-spacing: 0.06rem;
+            text-transform: uppercase;
+            color: white;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+
+            &:last-child {
+                border-right: none;
+            }
+
+            &::after {                                             /* Underline effect */
+                position: absolute;
+                bottom: 1.25rem;                                   /* Adjust as per the desired position */
+                left: 50%;
+                width: 50%;
+                height: 2px;
+                margin: 0 auto;
+                content: '';
+                transition: transform 0.3s ease;
+                transform: translateX(-50%) scaleX(0);
+                transform-origin: center;
+                background-color: currentColor;
+            }
+
+            &.active::after {
+                transform: translateX(-50%) scaleX(1);
+            }
+        }
+    }
+}
+
+/*** Responsive layout for smaller screen (Mobile support) ***/
+@media (max-width: 600px) {
+    .header {
+        --navbar-width: min(calc(100vw - var(--toggle-size)), 260px);
+        height: calc(var(--toggle-size) * 4.2);                    /* Header height should be match with toggle */
+    }
+
+    .content {
+        display: none;
+    }
+
+    .navbar {
+        overflow: auto;                                            /* Make sure the navbar display all content */
+        flex-direction: column;
+        justify-content: start;
+        width: var(--navbar-width);
+        height: 100vh;
+        transform: translate(calc(var(--navbar-width) * -1));      /* Initially off-screen should be negative navbar width */
+
+        .tab {
+            padding: 1rem;
+            letter-spacing: 0.02rem;
+            text-transform: uppercase;
+            color: white;
+            border-bottom: 1px solid white;
+            background: transparent;
+        }
+
+        &.expanded {
+            transform: none;                                       /* Slide in */
+            background-color: black;
+        }
+    }
+}
