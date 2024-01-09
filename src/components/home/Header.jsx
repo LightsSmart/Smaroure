@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Toggle from "./Toggle.jsx";
-import Nav, { useNavItem } from "../shared/Navs.jsx";
-import Button from "../shared/Button.jsx";
+import { Button, Nav, useNavItem } from "../shared/index.js";
 import styles from "./Header.module.css";
 
 const Tab = React.forwardRef(function ({ eventKey, ...props }, ref) {

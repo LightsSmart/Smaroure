@@ -19,6 +19,9 @@
   "devDependencies": {
     "@swc/core": "latest",
     "@tauri-apps/cli": "^2.0.0-alpha.20",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "vite": "latest"
   }
 }

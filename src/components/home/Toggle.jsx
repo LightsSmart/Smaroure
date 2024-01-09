@@ -1,4 +1,4 @@
-import Button from "../shared/Button.jsx";
+import { Button } from "../shared/index.js";
 import styles from "./Toggle.module.css";
 
 function Toggle({ expanded, onToggle }) {

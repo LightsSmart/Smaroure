@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tabs from "../shared/Tabs.jsx";
+import { Tabs } from "../shared/index.js";
 import Header from "./Header.jsx";
 import styles from "./index.module.css";
 
