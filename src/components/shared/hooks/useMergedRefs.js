@@ -17,7 +17,7 @@ export function useMergedRefs(...refs) {
     return useCallback(function (/** @type {*} */ value) {
         refs.forEach((/** @type {*} */ ref) => {
             const funRef = !!ref && typeof ref !== "function"
-                ? (/** @type {*} */ value) => ref.current = value
+                ? (/** @type {*} */ param) => ref.current = param
                 : ref;
 
             if (funRef) funRef(value)

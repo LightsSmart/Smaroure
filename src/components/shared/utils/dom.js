@@ -7,8 +7,8 @@ export function getNodeName(node) {
 }
 
 /**
- * @param {?} node
- * @return {Window}
+ * @param {*} node
+ * @return {typeof window}
  */
 export function getWindow(node) {
     return node?.ownerDocument?.defaultView || window
@@ -24,7 +24,7 @@ export function getDocumentElement(node) {
 
 /**
  * @param {?} value
- * @return {boolean}
+ * @return {value is Node}
  */
 export function isNode(value) {
     return value instanceof Node || value instanceof getWindow(value).Node;
@@ -32,7 +32,7 @@ export function isNode(value) {
 
 /**
  * @param {?} value
- * @return {boolean}
+ * @return {value is Element}
  */
 export function isElement(value) {
     return value instanceof Element || value instanceof getWindow(value).Element;
@@ -40,7 +40,7 @@ export function isElement(value) {
 
 /**
  * @param {?} value
- * @return {boolean}
+ * @return {value is HTMLElement}
  */
 export function isHTMLElement(value) {
     return value instanceof HTMLElement || value instanceof getWindow(value).HTMLElement;
@@ -48,7 +48,7 @@ export function isHTMLElement(value) {
 
 /**
  * @param {?} value
- * @return {boolean}
+ * @return {value is ShadowRoot}
  */
 export function isShadowRoot(value) {
     // Browsers without `ShadowRoot` support.

@@ -1,21 +1,10 @@
 import React from "react";
 
-/** @typedef {"button" | "reset" | "submit"} ButtonType Defines the permissible button types. */
-
 /**
  * A hook designed to format a component as an accessible button, adhering to established web standards.
  *
- * @param {object} options - The options for the hook.
- * @param {ButtonType} [options.type] - Specifies the button type.
- * @param {boolean} [options.disabled] - Determines whether the button is disabled.
- * @param {string} [options.href] - Designates the URL for anchor-type buttons.
- * @param {string} [options.rel] - Defines the relationship between the current document and the linked URL for anchor-type buttons.
- * @param {string} [options.target] - Specifies the target frame for the linked URL in anchor-type buttons.
- * @param {React.EventHandler<React.MouseEvent | React.KeyboardEvent>} [options.onClick] - Handler for click and keyboard events.
- * @param {number} [options.tabIndex] - Sets the tabIndex attribute for the button.
- * @param {keyof React.JSX.IntrinsicElements} [options.tagName] - Determines the HTML tag to be used for the button.
- * @param {React.AriaRole | undefined} [options.role] - Assigns an ARIA role to the button.
- * @returns {[*, {tagName: React.ElementType}]}
+ * @param {import("./types.js").useButtonOptions} options - The options for the hook.
+ * @return {[*, {tagName: React.ElementType}]}
  */
 export function useButton({ tagName, disabled, href, target, rel, role, onClick, tabIndex = 0, type }) {
     tagName = tagName ?? (href != null || target != null || rel != null ? "a" : "button");
@@ -68,14 +57,9 @@ export function useButton({ tagName, disabled, href, target, rel, role, onClick,
 /**
  * Button component capable of being rendered as various HTML elements.
  *
- * @param {object} props - The properties for the button component.
- * @param {keyof React.JSX.IntrinsicElements | undefined} [props.as] - The underlying element to be rendered, e.g., `button`, `a`, etc.
- * @param {boolean | undefined} [props.disabled] - Indicates whether the button is disabled.
- * @param {string | undefined} [props.href] - URL for rendering an anchor element styled as a button.
- * @param {string | undefined} [props.target] - Target frame for anchor elements rendered as buttons.
- * @param {string | undefined} [props.rel] - Relationship between the current document and the linked URL in anchor elements.
+ * @param {import("./types.js").ButtonProps} props - The properties for the button component.
  * @param {React.Ref<HTMLElement>} ref - Reference object for DOM node access.
- * @returns {React.JSX.Element}
+ * @return {React.JSX.Element}
  */
 function Button({ as: tagName, disabled, ...props }, ref) {
     const [buttonProps, { tagName: Component }] = useButton({ tagName, disabled, ...props });

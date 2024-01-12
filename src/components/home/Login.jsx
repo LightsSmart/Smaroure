@@ -5,8 +5,12 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    /**
+     * Submit the login form to remote server.
+     * @param {React.FormEvent<?>} [event]
+     */
     function handleSubmit(event) {
-        event.preventDefault();
+        event?.preventDefault();
     }
 
     return (

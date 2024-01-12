@@ -24,7 +24,7 @@ export function useUncontrolledProp(prop, defaultValue, handler) {
 
     return [
         isProp ? prop : state,
-        useCallback(function (/** @type {[*]} */ ...args) {
+        useCallback(function (/** @type {*} */ ...args) {
             const [value, ...rest] = args;
 
             let returnValue = handler?.(value, ...rest);

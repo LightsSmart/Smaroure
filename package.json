@@ -10,18 +10,19 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tauri-apps/api": "^2.0.0-alpha.13",
-    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3",
+    "@tauri-apps/api": "^2.0.0-alpha.14",
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.5",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest"
   },
   "devDependencies": {
+    "@ampproject/remapping": "latest",
     "@swc/core": "latest",
-    "@tauri-apps/cli": "^2.0.0-alpha.20",
-    "@types/node": "latest",
+    "@tauri-apps/cli": "^2.0.0-alpha.21",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "magic-string": "latest",
     "vite": "latest"
   }
 }

@@ -23,13 +23,13 @@ function App() {
         5: { title: "Shop",     element: <Render content={shop} />    },
         6: { title: "Contact",  element: <Render content={contact} /> },
         7: { title: "MyHouse",  element: <Login />                    }
-    }
+    };
 
     // Use string template for better character compatibility
     const title = {
         main: String.raw`SmartLights`,
         sub: String.raw`By VAALEEX Inc.`
-    }
+    };
 
     return (
         <Router>

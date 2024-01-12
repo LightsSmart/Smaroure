@@ -8,16 +8,18 @@ export { default as Render } from "./Render.jsx";
 
 /**
  * The home component, including response header, with hero image and text, tabs system.
- * @param {{[key: number]: {title: string, element: JSX.Element}}} tabs
- * @param {string} image
- * @param {{main: string, sub:string}} title
- * @returns {JSX.Element}
+ *
+ * @param {object} props
+ * @param {{[key: number]: {title: string, element: React.JSX.Element}}} props.tabs
+ * @param {string} props.image
+ * @param {{main: string, sub:string}} props.title
+ * @return {React.JSX.Element}
  */
 function Home({ tabs, image, title }) {
     const [activeKey, setActiveKey] = useState(1);
 
     return (
-        <Tabs activeKey={activeKey} onSelect={key => setActiveKey(key)}>
+        <Tabs activeKey={activeKey} onSelect={(/** @type {*} */ key) => key && setActiveKey(key)}>
           <div className={styles.background}>
             <img src={image} alt={title.main} />
           </div>

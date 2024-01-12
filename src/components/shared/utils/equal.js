@@ -2,8 +2,8 @@
  * This function supports comparison of all types, including `Function`, `RegExp`, `Date`, `Set`,
  * `Map`, `TypedArrays`, `DataView`, `null`, `undefined`, and `NaN` values.
  *
- * @param {*} a The first value
- * @param {*} b The second value
+ * @param {?} a The first value
+ * @param {?} b The second value
  * @return {boolean} The compare result
  */
 export function deepEqual(a, b) {

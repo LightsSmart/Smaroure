@@ -6,15 +6,8 @@ import { TabContext } from "./Tabs.jsx";
 import Button from "./Button.jsx";
 
 /**
- * @typedef {import("./index.js").EventKey} EventKey
- * @typedef {import("./index.js").SelectCallback} SelectCallback
- * @typedef {import("./Tabs.jsx").TabContextType} TabContextType
- *
- * @typedef {object} NavContextType
- * * @property {string} [role] - The ARIA role for the Nav context.
- *  * @property {EventKey | null} activeKey - The active key within the Nav context.
- *  * @property {function(EventKey | null): string} getControlledId - Function to get the controlled ID.
- *  * @property {function(EventKey | null): string} getControllerId - Function to get the controller ID.
+ * @typedef {import("./types.js").EventKey} EventKey
+ * @typedef {import("./types.js").NavContextType} NavContextType
  */
 
 export const NavContext = /** @type {React.Context<NavContextType | null>} */ (React.createContext(null));
@@ -22,14 +15,9 @@ export const NavContext = /** @type {React.Context<NavContextType | null>} */ (R
 /**
  * Create flexible navigation elements like tabs, navbars, and menus.
  *
- * @param {object} props - The properties for the Nav component.
- * @param {React.ElementType} [props.as] - The element type used for rendering the component.
- * @param {SelectCallback} [props.onSelect] - Callback function invoked when a NavItem is selected.
- * @param {string|number} [props.activeKey] - The key of the currently active NavItem.
- * @param {string} [props.role] - The ARIA role for the component, defaults based on TabContext.
- * @param {function(React.KeyboardEvent<HTMLElement>): void} [props.onKeyDown] - Handler for keyboard events.
+ * @param {import("./types.js").NavProps} props - The properties for the Nav component.
  * @param {React.Ref<HTMLElement>} ref - Reference object for DOM node access.
- * @returns {JSX.Element}
+ * @return {React.JSX.Element}
  */
 function Nav({ as: Component = "div", onSelect, activeKey, role, onKeyDown, ...props }, ref) {
     const [, forceUpdate] = useReducer(state => !state, false);
@@ -41,7 +29,7 @@ function Nav({ as: Component = "div", onSelect, activeKey, role, onKeyDown, ...p
     role ??= tabContext ? "tablist" : undefined;
     activeKey = tabContext ? tabContext.activeKey : activeKey;
 
-    const listNode = useRef(null);
+    const listNode = useRef(/** @type {*} */ (null));
 
     /**
      * Calculates and returns the next active tab based on the current active tab and the provided offset.
@@ -49,7 +37,7 @@ function Nav({ as: Component = "div", onSelect, activeKey, role, onKeyDown, ...p
      * @return {HTMLElement | null}
      */
     function getNextActiveTab(offset) {
-        const currentListNode = /** @type {*} */ (listNode.current);
+        const currentListNode = listNode.current;
         if (!currentListNode) return null;
 
         const items = Array.from(currentListNode.querySelectorAll(`[${dataAttr("event-key")}]:not([aria-disabled=true])`));
@@ -69,7 +57,7 @@ function Nav({ as: Component = "div", onSelect, activeKey, role, onKeyDown, ...p
     /**
      * Handles the selection of a NavItem.
      * @param {string | null} key
-     * @param {React.SyntheticEvent} event
+     * @param {React.SyntheticEvent<?>} event
      */
     function handleSelect(key, event) {
         if (key == null) return;
@@ -110,7 +98,7 @@ function Nav({ as: Component = "div", onSelect, activeKey, role, onKeyDown, ...p
     }
 
     useEffect(() => {
-        const currentListNode = /** @type {*} */ (listNode.current);
+        const currentListNode = listNode.current;
 
         if (currentListNode && needsRefocusRef.current) {
             const activeChild = currentListNode.querySelector(`[${dataAttr("event-key")}][aria-selected=true]`);
@@ -144,13 +132,7 @@ function Nav({ as: Component = "div", onSelect, activeKey, role, onKeyDown, ...p
 /**
  * A hook designed to create a navigation item within a Nav system.
  *
- * @param {object} options - The options for the hook.
- * @param {string | null} [options.key] - The unique key for the navigation item.
- * @param {React.MouseEventHandler} [options.onClick] - Handler for click events.
- * @param {boolean} [options.active] - Specifies whether the item is active.
- * @param {boolean} [options.id] - The DOM ID for the item.
- * @param {string} [options.role] - ARIA role for the item.
- * @param {string} [options.disabled] - Indicates whether the item is disabled.
+ * @param {import("./types.js").UseNavItemOptions} options - The options for the hook.
  * @return {[*, {isActive?: boolean}]}
  */
 export function useNavItem({ key, onClick, active, id, role, disabled }) {
@@ -188,7 +170,7 @@ export function useNavItem({ key, onClick, active, id, role, disabled }) {
         }
     }
 
-    props.onClick = useEventCallback(function (/** @type {React.MouseEvent} */ event) {
+    props.onClick = useEventCallback(function (event) {
         if (disabled) return;
 
         onClick?.(event);
@@ -205,14 +187,9 @@ export function useNavItem({ key, onClick, active, id, role, disabled }) {
 /**
  * NavItem Component representing a navigation item within the {@link Nav}.
  *
- * @param {object} props - The properties for the nav item component.
- * @param {React.ElementType} [props.as] - The element type used for rendering the component.
- * @param {boolean} [props.active] - Indicates whether the NavItem should be highlighted as active.
- * @param {string|number} props.eventKey - The key passed to the onSelect handler, useful for identifying the selected NavItem.
- * @param {string} [props.disabled] - If true, disables the NavItem, making it unselectable.
- * @param {string} [props.href] - The HTML href attribute corresponding to a.href.
+ * @param {import("./types.js").NavItemProps} props - The properties for the nav item component.
  * @param {React.Ref<HTMLElement>} ref - Reference object for DOM node access.
- * @returns {JSX.Element}
+ * @return {React.JSX.Element}
  */
 function NavItem({ as: Component = Button, active, eventKey, ...props }, ref) {
     const [navItemProps, meta] = useNavItem({

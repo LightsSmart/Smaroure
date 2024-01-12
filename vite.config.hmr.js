@@ -1,5 +1,6 @@
-/*! Copyright (c) Meta Platforms, Inc. and affiliates. **/
 /**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
  * This is simplified pure-js version of https://github.com/facebook/react/blob/main/packages/react-refresh/src/ReactFreshRuntime.js
  * without IE11 compatibility and verbose isDev checks.
  * Some utils are appended at the bottom for HMR integration.
@@ -163,7 +164,7 @@ function performReactRefresh() {
         // TODO: rename these fields to something more meaningful.
         const update = {
             updatedFamilies, // Families that will re-render preserving state
-            staleFamilies, // Families that will be remounted
+            staleFamilies // Families that will be remounted
         };
 
         helpersByRendererID.forEach((helpers) => {
@@ -186,9 +187,7 @@ function performReactRefresh() {
         failedRootsSnapshot.forEach((root) => {
             const helpers = helpersByRootSnapshot.get(root);
             if (helpers === undefined) {
-                throw new Error(
-                    "Could not find helpers for a root. This is a bug in React Refresh.",
-                );
+                throw new Error("Could not find helpers for a root. This is a bug in React Refresh.");
             }
             if (!failedRoots.has(root)) {
                 // No longer failed.
@@ -213,9 +212,7 @@ function performReactRefresh() {
         mountedRootsSnapshot.forEach((root) => {
             const helpers = helpersByRootSnapshot.get(root);
             if (helpers === undefined) {
-                throw new Error(
-                    "Could not find helpers for a root. This is a bug in React Refresh.",
-                );
+                throw new Error("Could not find helpers for a root. This is a bug in React Refresh.");
             }
             if (!mountedRoots.has(root)) {
                 // No longer mounted.
@@ -266,7 +263,7 @@ function register(type, id) {
     allFamiliesByType.set(type, family);
 
     // Visit inner types because we might not have registered them.
-    if (typeof type === "object" && type !== null) {
+    if (typeof type === "object") {
         switch (getProperty(type, "$$typeof")) {
             case REACT_FORWARD_REF_TYPE:
                 register(type.render, id + "$render");
@@ -284,7 +281,7 @@ function setSignature(type, key, forceReset, getCustomHooks) {
             forceReset,
             ownKey: key,
             fullKey: null,
-            getCustomHooks: getCustomHooks || (() => []),
+            getCustomHooks: getCustomHooks || (() => [])
         });
     }
     // Visit inner types because we might not have signed them.
@@ -327,7 +324,7 @@ export function injectIntoGlobalHook(globalObject) {
             inject: (injected) => nextID++,
             onScheduleFiberRoot: (id, root, children) => {},
             onCommitFiberRoot: (id, root, maybePriorityLevel, didError) => {},
-            onCommitFiberUnmount() {},
+            onCommitFiberUnmount: () => {}
         };
     }
 
@@ -337,7 +334,7 @@ export function injectIntoGlobalHook(globalObject) {
         // Using console['warn'] to evade Babel and ESLint
         console["warn"](
             "Something has shimmed the React DevTools global hook (__REACT_DEVTOOLS_GLOBAL_HOOK__). " +
-            "Fast Refresh is not compatible with this shim and will be disabled.",
+            "Fast Refresh is not compatible with this shim and will be disabled."
         );
         return;
     }
@@ -346,10 +343,7 @@ export function injectIntoGlobalHook(globalObject) {
     const oldInject = hook.inject;
     hook.inject = function (injected) {
         const id = oldInject.apply(this, arguments);
-        if (
-            typeof injected.scheduleRefresh === "function" &&
-            typeof injected.setRefreshHandler === "function"
-        ) {
+        if (typeof injected.scheduleRefresh === "function" && typeof injected.setRefreshHandler === "function") {
             // This version supports React Refresh.
             helpersByRendererID.set(id, injected);
         }
@@ -360,10 +354,7 @@ export function injectIntoGlobalHook(globalObject) {
     // This is useful if ReactDOM has already been initialized.
     // https://github.com/facebook/react/issues/17626
     hook.renderers.forEach((injected, id) => {
-        if (
-            typeof injected.scheduleRefresh === "function" &&
-            typeof injected.setRefreshHandler === "function"
-        ) {
+        if (typeof injected.scheduleRefresh === "function" && typeof injected.setRefreshHandler === "function") {
             // This version supports React Refresh.
             helpersByRendererID.set(id, injected);
         }
@@ -478,10 +469,7 @@ export function createSignatureFunctionForTransform() {
             // Set the signature for all types (even wrappers!) in case
             // they have no signatures of their own. This is to prevent
             // problems like https://github.com/facebook/react/issues/20417.
-            if (
-                type != null &&
-                (typeof type === "function" || typeof type === "object")
-            ) {
+            if (type != null && (typeof type === "function" || typeof type === "object")) {
                 setSignature(type, key, forceReset, getCustomHooks);
             }
             return type;
@@ -587,14 +575,11 @@ export function validateRefreshBoundaryAndEnqueueUpdate(prevExports, nextExports
     }
 
     let hasExports = false;
-    const allExportsAreComponentsOrUnchanged = predicateOnExport(
-        nextExports,
-        (key, value) => {
-            hasExports = true;
-            if (isLikelyComponentType(value)) return true;
-            return prevExports[key] === nextExports[key];
-        },
-    );
+    const allExportsAreComponentsOrUnchanged = predicateOnExport(nextExports, (key, value) => {
+        hasExports = true;
+        if (isLikelyComponentType(value)) return true;
+        return prevExports[key] === nextExports[key];
+    });
     if (hasExports && allExportsAreComponentsOrUnchanged) {
         enqueueUpdate();
     } else {
