@@ -7,7 +7,7 @@ class AssertionError extends Error {
     /**
      * Create an assertion error.
      *
-     * @param {string} message Message explaining error.
+     * @param {string} message - Message explaining error.
      * @param {?} actual - Value.
      * @param {?} expected - Baseline.
      * @param {string} operator - Name of equality operation.
@@ -36,8 +36,8 @@ class AssertionError extends Error {
  * @template {?} T - Expected kind.
  * @param {?} actual - Value.
  * @param {T} expected - Baseline.
- * @param {Error | string | null | undefined} [message] - Message for assertion error (default: `'Expected values to be deeply equal'`).
- * @returns {asserts actual is T}
+ * @param {Error | string} [message] - Message for assertion error (default: `'Expected values to be deeply equal'`).
+ * @return {asserts actual is T}
  * @throws {AssertionError} - Throws when `actual` is not deep strict equal to `expected`.
  */
 export function equal(actual, expected, message) {
@@ -48,8 +48,8 @@ export function equal(actual, expected, message) {
  * Assert if `value` is truthy.
  *
  * @param {?} value - Value to assert.
- * @param {Error | string | null | undefined} [message] - Message for assertion error (default: `'Expected value to be truthy'`).
- * @returns {asserts value}
+ * @param {Error | string} [message] - Message for assertion error (default: `'Expected value to be truthy'`).
+ * @return {asserts value}
  * @throws {AssertionError} - Throws when `value` is falsey.
  */
 export function ok(value, message) {
@@ -59,8 +59,8 @@ export function ok(value, message) {
 /**
  * Assert that a code path never happens.
  *
- * @param {Error | string | null | undefined} [message] - Message for assertion error (default: `'Unreachable'`).
- * @returns {never}
+ * @param {Error | string} [message] - Message for assertion error (default: `'Unreachable'`).
+ * @return {never}
  * @throws {AssertionError} -Throws when `value` is falsey.
  */
 export function unreachable(message) {
@@ -73,10 +73,11 @@ export function unreachable(message) {
  * @param {?} expected - Expected value.
  * @param {string} operator - Operator.
  * @param {string} defaultMessage - Default message for operation.
- * @param {Error | string | null | undefined} userMessage - User-provided message.
- * @returns {asserts bool}
+ * @param {Error | string} [userMessage] - User-provided message.
+ * @return {asserts bool}
  */
 function assert(bool, actual, expected, operator, defaultMessage, userMessage) {
+// #if DEV
     if (!bool) {
         throw userMessage instanceof Error
             ? userMessage
@@ -86,4 +87,5 @@ function assert(bool, actual, expected, operator, defaultMessage, userMessage) {
                 operator,
                 !userMessage);
     }
+// #endif
 }

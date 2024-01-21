@@ -34,8 +34,8 @@ function NoopTransition({ in: inProp, onExited, mountOnEnter, unmountOnExit, chi
 }
 
 /**
- * Constructs dynamic tab interfaces as described in the WAI-ARIA Authoring Practices. It uses a {@link Nav}
- * component for navigation.
+ * Constructs dynamic tab interfaces as described in the WAI-ARIA Authoring
+ * Practices. It uses a {@link Nav} component for navigation.
  *
  * @param {import("./types.js").TabsProps} props - The properties for the tabs component.
  * @return {React.JSX.Element}
@@ -69,7 +69,7 @@ function Tabs({ id, onSelect, activeKey, defaultActiveKey, transition, mountOnEn
 /**
  * A hook for using a tab panel within the {@link Tabs} component.
  *
- * @param {import("./types.js").UseTabPanelOptions} options The options for the hook.
+ * @param {import("./types.js").UseTabPanelOptions} options - The options for the hook.
  * @return {[*, *]}
  */
 export function useTabPanel({ active, eventKey, transition, mountOnEnter, unmountOnExit, role = "tabpanel", ...props }) {

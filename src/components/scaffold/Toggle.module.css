@@ -3,7 +3,7 @@
     z-index: 100;
     width: var(--toggle-size);
     height: var(--toggle-size);
-    line-height: var(--toggle-size);                             /* Make sure svg will place center vertically */
+    line-height: var(--toggle-size);                               /* Make sure svg will place center vertically */
     cursor: pointer;
     transition: transform 0.3s;
     border: 1px solid white;
@@ -12,7 +12,7 @@
 
     svg {
         overflow: visible;
-        width: calc(var(--toggle-size) / 1.75);                  /* Width relative to toggle size */
+        width: calc(var(--toggle-size) / 1.75);                    /* Width relative to toggle size */
     }
 
     rect {
@@ -44,7 +44,7 @@
 /*** Responsive layout for smaller screen (Mobile support) ***/
 @media (max-width: 600px) {
     .toggle {
-        position: fixed;                                         /* Force the toggle overlap everything and pin top 0 */
+        position: fixed;                                           /* Force the toggle overlap everything and pin top 0 */
         top: 0;
         transform: none;
 

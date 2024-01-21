@@ -32,7 +32,8 @@ function Nav({ as: Component = "div", onSelect, activeKey, role, onKeyDown, ...p
     const listNode = useRef(/** @type {*} */ (null));
 
     /**
-     * Calculates and returns the next active tab based on the current active tab and the provided offset.
+     * Calculates and returns the next active tab based on the current active
+     * tab and the provided offset.
      * @param {number} offset
      * @return {HTMLElement | null}
      */

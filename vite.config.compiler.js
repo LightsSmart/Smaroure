@@ -96,7 +96,7 @@ RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
   RefreshRuntime.registerExportsForReactRefresh("${filepath}", currentExports);
   import.meta.hot.accept((nextExports) => {
     if (!nextExports) return;
-    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate(currentExports, nextExports);
+    const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("${filepath}", currentExports, nextExports);
     if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
   });
 });`;
@@ -198,7 +198,6 @@ RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
         };
     }
 }
-
 
 export function preprocessor({ include = ["**/*"], exclude = [/[\\/]node_modules[\\/]/], directives = [] } = {}) {
     const filter = createFilter(include, exclude);

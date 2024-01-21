@@ -1,15 +1,21 @@
-import React from "react";
-import Controller from "./Controller.jsx";
+import React, { useState } from "react";
+import IO from "./IO.jsx";
 
-function Dashboard() {
+/**
+ *
+ * @param {*} state
+ * @return {React.JSX.Element}
+ */
+function Dashboard({ state }) {
+    const [toggled, setToggled] = useState(false);
+    const [enable, setEnable] = useState(false);
+
     return (
-        <>
-            {/* For debug propose */}
-            <Controller components={[
-                { type: "switch"  },
-                { type: "charger" }
-            ]}/>
-        </>
+        <div style={{ width: 220, border: "1px solid" }}>
+          <IO enable={toggled} onToggle={() => setToggled(!toggled)}>
+            test
+          </IO>
+        </div>
     );
 }
 

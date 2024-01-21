@@ -8,13 +8,12 @@
 /*** Base Styles ***/
 .background {
     z-index: -100;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     overflow: hidden;
     width: 100%;
-    height: 100%;
-    min-height: 10rem;
+    height: max(16rem, 100%);
     user-select: none;
     pointer-events: none;
 
@@ -29,6 +28,11 @@
 /*** Responsive layout for smaller screen (Mobile support) ***/
 @media (max-width: 600px) {
     .background {
-        display: none;
+        position: absolute;
+        height: calc(var(--toggle-size) * 4.2);                                 /* Background height should be match with header */
+
+        & > img {
+            height: auto;
+        }
     }
 }

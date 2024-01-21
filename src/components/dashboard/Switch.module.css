@@ -1,0 +1,18 @@
+.switch {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.on {
+    background-color: #ffcc00; /* Light color */
+    color: black;
+}
+
+.off {
+    background-color: #333; /* Dark color */
+    color: #ccc;
+}

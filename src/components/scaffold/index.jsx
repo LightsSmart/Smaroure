@@ -4,10 +4,9 @@ import Header from "./Header.jsx";
 import styles from "./index.module.css";
 
 export { default as Login } from "./Login.jsx";
-export { default as Render } from "./Render.jsx";
 
 /**
- * The home component, including response header, with hero image and text, tabs system.
+ * The scaffold component, including response header, with hero image and text, tabs system.
  *
  * @param {object} props
  * @param {{[key: number]: {title: string, element: React.JSX.Element}}} props.tabs
@@ -15,7 +14,7 @@ export { default as Render } from "./Render.jsx";
  * @param {{main: string, sub:string}} props.title
  * @return {React.JSX.Element}
  */
-function Home({ tabs, image, title }) {
+function Scaffold({ tabs, image, title }) {
     const [activeKey, setActiveKey] = useState(1);
 
     return (
@@ -33,4 +32,4 @@ function Home({ tabs, image, title }) {
     );
 }
 
-export default Home;
+export default Scaffold;

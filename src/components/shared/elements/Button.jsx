@@ -1,7 +1,8 @@
 import React from "react";
 
 /**
- * A hook designed to format a component as an accessible button, adhering to established web standards.
+ * A hook designed to format a component as an accessible button, adhering to
+ * established web standards.
  *
  * @param {import("./types.js").useButtonOptions} options - The options for the hook.
  * @return {[*, {tagName: React.ElementType}]}
@@ -12,7 +13,8 @@ export function useButton({ tagName, disabled, href, target, rel, role, onClick,
     if (tagName === "button") return [{ type: type || "button", disabled }, { tagName }];
 
     /**
-     * Handles click events, including prevention of default behavior for disabled or incorrectly configured anchor elements.
+     * Handles click events, including prevention of default behavior for
+     * disabled or incorrectly configured anchor elements.
      * @param {React.MouseEvent | React.KeyboardEvent} event
      */
     function handleClick(event) {

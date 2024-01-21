@@ -161,7 +161,6 @@ function performReactRefresh() {
             }
         });
 
-        // TODO: rename these fields to something more meaningful.
         const update = {
             updatedFamilies, // Families that will re-render preserving state
             staleFamilies // Families that will be remounted
@@ -564,18 +563,26 @@ function debounce(fn, delay) {
     };
 }
 
-const enqueueUpdate = debounce(performReactRefresh, 16);
+const hooks = [];
+window.__registerBeforePerformReactRefresh = (cb) => {
+    hooks.push(cb);
+};
+const enqueueUpdate = debounce(async () => {
+    if (hooks.length) await Promise.all(hooks.map((cb) => cb()));
+    performReactRefresh();
+}, 16);
 
-export function validateRefreshBoundaryAndEnqueueUpdate(prevExports, nextExports) {
-    if (!predicateOnExport(prevExports, (key) => key in nextExports)) {
+export function validateRefreshBoundaryAndEnqueueUpdate(id, prevExports, nextExports) {
+    const ignoredExports = window.__getReactRefreshIgnoredExports?.({ id }) ?? [];
+    if (predicateOnExport(ignoredExports, prevExports, (key) => key in nextExports) !== true) {
         return "Could not Fast Refresh (export removed)";
     }
-    if (!predicateOnExport(nextExports, (key) => key in prevExports)) {
+    if (predicateOnExport(ignoredExports, nextExports, (key) => key in prevExports) !== true) {
         return "Could not Fast Refresh (new export)";
     }
 
     let hasExports = false;
-    const allExportsAreComponentsOrUnchanged = predicateOnExport(nextExports, (key, value) => {
+    const allExportsAreComponentsOrUnchanged = predicateOnExport(ignoredExports, nextExports, (key, value) => {
         hasExports = true;
         if (isLikelyComponentType(value)) return true;
         return prevExports[key] === nextExports[key];
@@ -583,16 +590,17 @@ export function validateRefreshBoundaryAndEnqueueUpdate(prevExports, nextExports
     if (hasExports && allExportsAreComponentsOrUnchanged) {
         enqueueUpdate();
     } else {
-        return "Could not Fast Refresh";
+        return `Could not Fast Refresh ("${allExportsAreComponentsOrUnchanged}" export is incompatible).`;
     }
 }
 
-function predicateOnExport(moduleExports, predicate) {
+function predicateOnExport(ignoredExports, moduleExports, predicate) {
     for (const key in moduleExports) {
         if (key === "__esModule") continue;
+        if (ignoredExports.includes(key)) continue;
         const desc = Object.getOwnPropertyDescriptor(moduleExports, key);
-        if (desc && desc.get) return false;
-        if (!predicate(key, moduleExports[key])) return false;
+        if (desc && desc.get) return key;
+        if (!predicate(key, moduleExports[key])) return key;
     }
     return true;
 }

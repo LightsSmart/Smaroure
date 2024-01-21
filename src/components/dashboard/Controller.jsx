@@ -3,6 +3,12 @@ import Switch from "./Switch.jsx";
 import IO from "./IO.jsx";
 import styles from "./Controller.module.css";
 
+/**
+ *
+ * @param {object} props
+ * @param {[any]} props.components
+ * @return {React.JSX.Element}
+ */
 function Controller({ components }) {
     const [selectedItem, setSelectedItem] = useState(null);
     const [orientation, setOrientation] = useState("vertical");
@@ -16,26 +22,37 @@ function Controller({ components }) {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    /**
+     * @param {*} index
+     * @param {*} data
+     */
     function handleChange(index, data) {
     }
 
+    /**
+     * @param {*} component
+     * @param {*} index
+     * @return {React.JSX.Element|null}
+     */
     function renderComponent(component, index) {
         switch (component.type) {
             case "switch":
                 return (
                     <Switch
-                        name={component.name}
-                        checked={component.checked}
-                        onChange={(e) => handleChange(index, { checked: e.target.checked })}
-                    />
+                        enable={component.checked}
+                        onToggle={(e) => handleChange(index, { checked: e.target })}
+                    >
+                      {component.name}
+                    </Switch>
                 );
             case "io":
                 return (
                     <IO
-                        name={component.name}
-                        value={component.value}
-                        onChange={(e) => handleChange(index, { value: e.target.value })}
-                    />
+                        enable={component.value}
+                        onToggle={(e) => handleChange(index, { value: e.target })}
+                    >
+                      {component.name}
+                    </IO>
                 );
             default:
                 return null;
@@ -45,25 +62,11 @@ function Controller({ components }) {
 
     return (
         <div className={`${styles.container} ${orientation === "vertical" ? "column" : "row"}`}>
-            <div>
-                {components.map((component, index) => (
-                    <button ></button>
-                ))}
-            </div>
           {components.map((component, index) => (
             <div key={index} className={styles.item}>
               {renderComponent(component, index)}
             </div>
           ))}
-            {/*<button onClick={() => setOrientation("horizontal")}>Horizontal</button>*/}
-            {/*<button onClick={() => setOrientation("vertical")}>Vertical</button>*/}
-            {/*<div className={styles.container} style={{ display: "flex", flexDirection: orientation === "vertical" ? "column" : "row" }}>*/}
-            {/*    {components.map((component, index) => (*/}
-            {/*        <div key={index} style={{ margin: "10px" }}>*/}
-            {/*            {renderComponent(component, index)}*/}
-            {/*        </div>*/}
-            {/*    ))}*/}
-            {/*</div>*/}
         </div>
     );
 }

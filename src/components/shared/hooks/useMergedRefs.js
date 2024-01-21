@@ -11,7 +11,7 @@ import { useCallback } from "react";
  *   return <button ref={mergedRef} {...props}/>
  * });
  *
- * @param {Parameters<*>} refs A group of Callback or mutable Refs
+ * @param {Parameters<*>} refs - A group of Callback or mutable Refs
  */
 export function useMergedRefs(...refs) {
     return useCallback(function (/** @type {*} */ value) {

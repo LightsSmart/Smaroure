@@ -17,6 +17,7 @@
     "react-router-dom": "latest"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "latest",
     "@ampproject/remapping": "latest",
     "@swc/core": "latest",
     "@tauri-apps/cli": "^2.0.0-alpha.21",
